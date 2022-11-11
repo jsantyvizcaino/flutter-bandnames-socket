@@ -1,4 +1,6 @@
+import 'package:band_names/src/providers/socket_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:band_names/src/pages/pages.dart';
 
@@ -9,12 +11,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      initialRoute: HomePage.routerName,
-      routes: {
-        HomePage.routerName: (_) => const HomePage(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => SocketService(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Material App',
+        initialRoute: HomePage.routerName,
+        routes: {
+          HomePage.routerName: (_) => const HomePage(),
+          StatusPage.routerName: (_) => const StatusPage(),
+        },
+      ),
     );
   }
 }
